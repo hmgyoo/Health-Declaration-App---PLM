@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "277597747173",
+    "project_id": "ihd-plm-new",
+    "storage_bucket": "ihd-plm-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277597747173:android:99f46c18116d5ade41610c",
+        "android_client_info": {
+          "package_name": "com.example.ihdplm_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277597747173-ldbeb8vhvonaald9jnh3fomfdjmth39i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1yKntx56OFIpqy76rOFYHVnUqpO7wJVU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277597747173-ldbeb8vhvonaald9jnh3fomfdjmth39i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
