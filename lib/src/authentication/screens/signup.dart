@@ -1,16 +1,17 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:ihdplm_new/main.dart';
-import 'package:ihdplm_new/screens/login.dart';
+import 'package:ihdplm_new/src/authentication/screens/login.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ihdplm_new/auth/auth.dart';
+import 'package:ihdplm_new/src/authentication/auth/auth.dart';
 
-import '../utils/constant.dart';
+import '../../utils/constant.dart';
 import '../widgets/rep_textfiled.dart';
 import 'package:email_auth/email_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -37,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerMobile = TextEditingController();
+  final TextEditingController _controllerStudentNo = TextEditingController();
 
   // Register (to import to sing up page later on)
   Future<void> createUserWithEmailAndPassword() async {
@@ -57,6 +59,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _controllerEmail.text.trim(),
           password: _controllerPassword.text.trim());
+
+      // add user details
+      addUserDetails(_controllerEmail.text.trim(), _controllerName.text.trim(),
+          _controllerStudentNo.text.trim(), _controllerMobile.text.trim());
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -65,6 +71,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     // Navigator of context not working
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
+
+  Future<void> addUserDetails(
+      String email, String fullName, String studentNo, String mobile) async {
+    await FirebaseFirestore.instance.collection('user').add({
+      'Email ID': email,
+      'Full Name': fullName,
+      'Student No': studentNo,
+      'Mobile': mobile,
+    });
   }
 
   // Email field
@@ -111,11 +127,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide( 
+                      borderSide: BorderSide(
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -162,10 +178,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   readOnly: false,
                   cursorColor: Colors.black,
                   showCursor: true,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => value != null && value.length < 6
-                      ? 'Enter min. of 6 characters.'
-                      : null,
                   decoration: InputDecoration(
                     suffixIcon: suficon,
                     focusedBorder: UnderlineInputBorder(
@@ -178,13 +190,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) => value != null && value.length < 6
+                      ? 'Enter min. of 6 characters.'
+                      : null,
                 ),
               ),
             ],
@@ -237,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -296,7 +312,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
+                    labelStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Student No field
+  Widget _studentNoField(TextEditingController controller, IconData icon,
+      Widget? suficon, String text) {
+    return FadeInDown(
+      delay: Duration(milliseconds: 1200),
+      child: Container(
+        width: double.infinity,
+        height: gHeight / 15,
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Icon(
+                icon,
+                color: iconColor,
+                size: 30,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                height: 50,
+                width: gWidth / 1.3,
+                child: TextField(
+                  textInputAction: TextInputAction.next,
+                  // obscureText: true,
+                  controller: controller,
+                  readOnly: false,
+                  cursorColor: Colors.black,
+                  showCursor: true,
+                  decoration: InputDecoration(
+                    suffixIcon: suficon,
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.black,
+                      ),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -389,7 +464,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Container(
             margin: EdgeInsets.all(15),
             width: gWidth,
-            height: gHeight,
+            // height: gHeight,
             child: Form(
               key: formKey,
               child: Column(
@@ -402,18 +477,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   _nameField(
                       _controllerName, LineIcons.user, null, 'Full Name'),
                   SizedBox(height: 15),
+                  _studentNoField(_controllerStudentNo,
+                      LineIcons.personEnteringBooth, null, 'Student ID No.'),
+                  SizedBox(height: 15),
                   _mobileField(
                       _controllerMobile, LineIcons.phone, null, 'Mobile'),
                   SizedBox(height: 15),
                   _passwordField(_controllerPassword, LineIcons.alternateUnlock,
                       Icon(LineIcons.eyeSlash), 'Password'),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   _errorMessage(),
-                  SizedBox(height: 25),
+                  SizedBox(height: 20),
                   BottomText(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 15),
                   _continueButton(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 25),
                   // LoginText(),
                   _loginNow(),
                 ],

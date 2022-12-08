@@ -1,7 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:ihdplm_new/screens/login.dart';
-import 'package:ihdplm_new/screens/signup.dart';
+import 'package:ihdplm_new/src/authentication/screens/login.dart';
+import 'package:ihdplm_new/src/authentication/screens/signup.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});

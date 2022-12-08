@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ihdplm_new/auth/auth.dart';
-import 'package:ihdplm_new/auth/authPage.dart';
-import 'package:ihdplm_new/screens/login.dart';
-import 'package:ihdplm_new/screens/reminders.dart';
+import 'package:ihdplm_new/src/authentication/auth/auth.dart';
+import 'package:ihdplm_new/src/authentication/auth/authPage.dart';
+import 'package:ihdplm_new/src/authentication/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:ihdplm_new/src/navigation/screens/navigation.dart';
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({super.key});
@@ -23,7 +23,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         } else if (snapshot.hasError) {
           return const Center(child: Text('Something went wrong!'));
         } else if (snapshot.hasData) {
-          return RemindersScreen();
+          return NavigationScreen();
         } else {
           return const AuthPage();
         }

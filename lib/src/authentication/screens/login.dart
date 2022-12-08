@@ -2,18 +2,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:ihdplm_new/auth/validator.dart';
-import 'package:ihdplm_new/screens/forgetpass.dart';
-import 'package:ihdplm_new/screens/reminders.dart';
-import 'package:ihdplm_new/screens/signup.dart';
-import 'package:ihdplm_new/utils/constant.dart';
+import 'package:ihdplm_new/src/authentication/auth/validator.dart';
+import 'package:ihdplm_new/src/authentication/screens/forgetpass.dart';
+import 'package:ihdplm_new/src/authentication/screens/signup.dart';
+import 'package:ihdplm_new/src/utils/constant.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:ihdplm_new/widgets/rep_textfiled.dart';
+import 'package:ihdplm_new/src/authentication/widgets/rep_textfiled.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ihdplm_new/auth/auth.dart';
+import 'package:ihdplm_new/src/authentication/auth/auth.dart';
 import 'package:ihdplm_new/main.dart';
+import 'package:ihdplm_new/src/dashboard/screens/reminders.dart';
 
 // Global key
 // final _formKey = GlobalKey<FormState>();
@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.grey,
                       ),
                     ),
-                    labelText: text,
+                    hintText: text,
                     labelStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -198,7 +198,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // error message
   Widget _errorMessage() {
-    return Text(errorMessage == '' ? '' : 'Hmm ? $errorMessage');
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Text(errorMessage == '' ? '' : 'Hmm ? $errorMessage',
+          style: TextStyle(
+              color: Colors.red, fontSize: 13, fontWeight: FontWeight.w500)),
+    );
   }
 
   // Login Button
@@ -271,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             margin: EdgeInsets.all(15),
             width: gWidth,
-            height: gHeight,
+            // height: gHeight,
             child: Form(
               child: Column(
                 children: [
@@ -588,8 +593,13 @@ class ForgotText extends StatelessWidget {
 
 // // Email text field
 // class EmailTextField extends StatelessWidget {
-//   const EmailTextField({
+//   final TextEditingController controller;
+//   final FormFieldValidator<String> validator;
+
+//   EmailTextField({
 //     Key? key,
+//     required this.controller,
+//     required this.validator,
 //   }) : super(key: key);
 
 //   @override
@@ -604,7 +614,8 @@ class ForgotText extends StatelessWidget {
 //           icon: LineIcons.at,
 //           suficon: null,
 //           text: "Email ID",
-//           controller: _controllerEmail,
+//           controller: controller,
+//           validator: (str) {},
 //         ));
 //   }
 // }

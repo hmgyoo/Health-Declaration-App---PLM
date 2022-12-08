@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ihdplm_new/controllers/submit_controller.dart';
-import 'package:ihdplm_new/utils/constant.dart';
+import 'package:ihdplm_new/src/utils/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ihdplm_new/auth/auth.dart';
+import 'package:ihdplm_new/src/authentication/auth/auth.dart';
 
-class RemindersScreen extends StatelessWidget {
-  RemindersScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({super.key});
 
   final User? user = FirebaseAuth.instance.currentUser;
 

@@ -1,17 +1,17 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:ihdplm_new/auth/validator.dart';
-import 'package:ihdplm_new/utils/constant.dart';
-import 'package:ihdplm_new/auth/auth.dart';
+import 'package:ihdplm_new/src/authentication/auth/validator.dart';
+import 'package:ihdplm_new/src/utils/constant.dart';
+import 'package:ihdplm_new/src/authentication/auth/auth.dart';
 
 class RepTextFiled extends StatelessWidget {
   final IconData icon;
   final Widget? suficon;
   final String text;
-  final myController = TextEditingController();
-  final myValidator = Validator();
-  TextEditingController controller;
+  final TextEditingController controller;
+  final FormFieldValidator<String> validator;
+  // Validator validator = Validator();
   // String input;
   // Validator validator;
 
@@ -20,6 +20,7 @@ class RepTextFiled extends StatelessWidget {
     required this.suficon,
     required this.text,
     required this.controller,
+    required this.validator,
     // required this.validator,
   });
 
@@ -32,7 +33,7 @@ class RepTextFiled extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
+          children: <Widget>[
             Icon(
               icon,
               color: iconColor,
@@ -44,10 +45,12 @@ class RepTextFiled extends StatelessWidget {
             SizedBox(
               height: 50,
               width: gWidth / 1.3,
-              child: TextField(
+              child: TextFormField(
+                controller: controller,
                 readOnly: false,
                 cursorColor: Colors.black,
                 showCursor: true,
+                validator: validator,
                 decoration: InputDecoration(
                   suffixIcon: suficon,
                   focusedBorder: UnderlineInputBorder(

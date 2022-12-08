@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ihdplm_new/bindings/bindings.dart';
-import 'package:ihdplm_new/screens/forgetpass.dart';
-import 'package:ihdplm_new/screens/login.dart';
-import 'package:ihdplm_new/screens/resetpass.dart';
-import 'package:ihdplm_new/screens/signup.dart';
+import 'package:ihdplm_new/src/authentication/screens/forgetpass.dart';
+import 'package:ihdplm_new/src/authentication/screens/login.dart';
+import 'package:ihdplm_new/src/authentication/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:ihdplm_new/auth/widget_tree.dart';
+import 'package:ihdplm_new/src/authentication/auth/widget_tree.dart';
+import 'package:ihdplm_new/src/utils/constant.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,10 +24,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      theme: ThemeData(
+        primaryColor: kPrimaryColor,
+        scaffoldBackgroundColor: kBackgroundColor,
+        textTheme: Theme.of(context).textTheme.apply(displayColor: kTextColor),
+      ),
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'IHDPLM_NEW',
-      initialBinding: MyBindings(),
       home: WidgetTree(),
     );
   }

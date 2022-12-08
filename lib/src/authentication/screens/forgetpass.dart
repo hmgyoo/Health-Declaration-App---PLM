@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:ihdplm_new/screens/login.dart';
-import 'package:ihdplm_new/screens/resetpass.dart';
-import 'package:ihdplm_new/widgets/rep_textfiled.dart';
+import 'package:ihdplm_new/src/authentication/screens/login.dart';
+import 'package:ihdplm_new/src/authentication/widgets/rep_textfiled.dart';
 import 'package:line_icons/line_icons.dart';
 
-import '../utils/constant.dart';
+import '../../utils/constant.dart';
 
 // Global key
 // final _formKey = GlobalKey<FormState>();
@@ -53,7 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               SizedBox(height: 20),
               MiddleText(),
               SizedBox(height: 30),
-              EmailTextField(),
+              // EmailTextField(),
               SizedBox(height: 50),
               SubmitButton(),
             ],
@@ -80,10 +79,7 @@ class SubmitButton extends StatelessWidget {
         width: gWidth,
         height: gHeight / 15,
         child: ElevatedButton(
-          onPressed: () {
-            Get.to(() => ResetPasswordScreen(),
-                transition: Transition.leftToRightWithFade);
-          },
+          onPressed: () {},
           child: Text("Submit"),
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll<Color>(
@@ -102,23 +98,23 @@ class SubmitButton extends StatelessWidget {
 }
 
 // Email text field
-class EmailTextField extends StatelessWidget {
-  const EmailTextField({
-    Key? key,
-  }) : super(key: key);
+// class EmailTextField extends StatelessWidget {
+//   const EmailTextField({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return FadeInDown(
-      delay: Duration(milliseconds: 600),
-      child: RepTextFiled(
-          icon: LineIcons.at,
-          suficon: null,
-          text: "Email ID / Mobile Number",
-          controller: _controllerEmail),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FadeInDown(
+//       delay: Duration(milliseconds: 600),
+//       child: RepTextFiled(
+//           icon: LineIcons.at,
+//           suficon: null,
+//           text: "Email ID / Mobile Number",
+//           controller: _controllerEmail),
+//     );
+//   }
+// }
 
 // Middle text
 class MiddleText extends StatelessWidget {
